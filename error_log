@@ -1,0 +1,2 @@
+[03-Jun-2025 23:53:41 America/Fortaleza] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home2/diego780/masterskysjc.webcoders.group/config/database.php:30) in /home2/diego780/masterskysjc.webcoders.group/index.php on line 61
+[03-Jun-2025 23:54:00 America/Fortaleza] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home2/diego780/masterskysjc.webcoders.group/config/database.php:30) in /home2/diego780/masterskysjc.webcoders.group/index.php on line 61
