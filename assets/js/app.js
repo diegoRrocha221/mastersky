@@ -1,3 +1,7 @@
+// ====================================
+// assets/js/app.js - Aplicação Principal
+// ====================================
+
 class MicroERP {
     constructor() {
         this.baseUrl = '/api';

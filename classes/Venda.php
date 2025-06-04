@@ -162,5 +162,4 @@ class Venda {
         return ['success' => true];
     }
 }
-
 ?>

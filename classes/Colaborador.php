@@ -1,5 +1,4 @@
 <?php
-
 class Colaborador {
     private $db;
     

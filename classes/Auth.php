@@ -1,4 +1,5 @@
 <?php
+
 class Auth {
     private $db;
     
@@ -87,5 +88,6 @@ class Auth {
         $stmt->execute([$usuario]);
     }
 }
+
 
 ?>

@@ -240,8 +240,4 @@ if (php_sapi_name() === 'cli') {
         exit(1);
     }
 }
-
-// ====================================
-// database/migrations/001_add_security_tables.sql
-// ====================================
 ?>

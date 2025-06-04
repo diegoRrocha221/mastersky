@@ -1,6 +1,6 @@
 <?php
 // ====================================
-// index.php - Master Sky - Sistema de Gestão
+// index.php - Master Sky - Sistema de Gestão COMPLETO
 // ====================================
 
 // Iniciar output buffering para evitar problemas com headers
@@ -507,6 +507,14 @@ ob_end_flush();
             color: #ffcccc;
         }
 
+        .produto-row {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 1px solid #dee2e6;
+        }
+
         /* DataTables customization */
         .dataTables_wrapper .dataTables_length select,
         .dataTables_wrapper .dataTables_filter input {
@@ -601,8 +609,8 @@ ob_end_flush();
                             <i class="bi bi-person-circle me-1"></i><?= htmlspecialchars($userData['nome']) ?>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Perfil</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Configurações</a></li>
+                            <li><a class="dropdown-item" href="#" data-section="perfil"><i class="bi bi-person me-2"></i>Perfil</a></li>
+                            <li><a class="dropdown-item" href="#" data-section="configuracoes"><i class="bi bi-gear me-2"></i>Configurações</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="?logout=1"><i class="bi bi-box-arrow-right me-2"></i>Sair</a></li>
                         </ul>
@@ -750,6 +758,126 @@ ob_end_flush();
                         </div>
                     </div>
 
+                    <!-- Perfil -->
+                    <div id="perfil-section" class="main-content d-none">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h2><i class="bi bi-person me-2"></i>Meu Perfil</h2>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="card card-custom">
+                                    <div class="card-header">
+                                        <h5>Informações Pessoais</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <form id="perfilForm">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Nome</label>
+                                                        <input type="text" class="form-control form-control-custom" name="nome" id="perfilNome">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Sobrenome</label>
+                                                        <input type="text" class="form-control form-control-custom" name="sobrenome" id="perfilSobrenome">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Email</label>
+                                                        <input type="email" class="form-control form-control-custom" name="email" id="perfilEmail">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Telefone</label>
+                                                        <input type="text" class="form-control form-control-custom" name="telefone" id="perfilTelefone">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Nova Senha (deixe em branco para manter atual)</label>
+                                                <input type="password" class="form-control form-control-custom" name="nova_senha">
+                                            </div>
+                                            <button type="button" class="btn btn-primary-custom btn-custom" onclick="salvarPerfil()">
+                                                <i class="bi bi-save me-2"></i>Salvar Alterações
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card card-custom">
+                                    <div class="card-header">
+                                        <h5>Informações do Sistema</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p><strong>Cargo:</strong> <span id="perfilCargo"></span></p>
+                                        <p><strong>Nível:</strong> <span id="perfilNivel"></span></p>
+                                        <p><strong>Último Acesso:</strong> <span id="perfilUltimoAcesso"></span></p>
+                                        <p><strong>Status:</strong> <span class="badge bg-success">Ativo</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Configurações -->
+                    <div id="configuracoes-section" class="main-content d-none">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h2><i class="bi bi-gear me-2"></i>Configurações do Sistema</h2>
+                        </div>
+
+                        <div class="card card-custom">
+                            <div class="card-header">
+                                <h5>Configurações Gerais</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="configuracoesForm">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Nome da Empresa</label>
+                                                <input type="text" class="form-control form-control-custom" name="empresa_nome" id="configEmpresaNome">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">CNPJ</label>
+                                                <input type="text" class="form-control form-control-custom" name="empresa_cnpj" id="configEmpresaCnpj">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Sistema de Comissão</label>
+                                                <select class="form-control form-control-custom" name="comissao_ativa" id="configComissaoAtiva">
+                                                    <option value="true">Ativo</option>
+                                                    <option value="false">Inativo</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Próximo Número de Venda</label>
+                                                <input type="number" class="form-control form-control-custom" name="proxima_venda" id="configProximaVenda">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-primary-custom btn-custom" onclick="salvarConfiguracoes()">
+                                        <i class="bi bi-save me-2"></i>Salvar Configurações
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Colaboradores -->
                     <div id="colaboradores-section" class="main-content d-none">
                         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -837,7 +965,8 @@ ob_end_flush();
                                                 <th>Cliente</th>
                                                 <th>Vendedor</th>
                                                 <th>Valor Total</th>
-                                                <th>Status</th>
+                                                <th>Status Venda</th>
+                                                <th>Status Pagamento</th>
                                                 <th>Ações</th>
                                             </tr>
                                         </thead>
@@ -1005,12 +1134,13 @@ ob_end_flush();
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">
-                        <i class="bi bi-person-plus me-2"></i>Novo Colaborador
+                        <i class="bi bi-person-plus me-2"></i><span id="colaboradorModalTitle">Novo Colaborador</span>
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <form id="colaboradorForm">
+                        <input type="hidden" name="id" id="colaboradorId">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
@@ -1064,8 +1194,9 @@ ob_end_flush();
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label">Senha *</label>
-                                    <input type="password" class="form-control form-control-custom" name="senha" required>
+                                    <label class="form-label">Senha <span id="senhaObrigatoria">*</span></label>
+                                    <input type="password" class="form-control form-control-custom" name="senha">
+                                    <small class="text-muted" id="senhaHelp" style="display:none;">Deixe em branco para manter a senha atual</small>
                                 </div>
                             </div>
                         </div>
@@ -1091,12 +1222,13 @@ ob_end_flush();
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">
-                        <i class="bi bi-box me-2"></i>Novo Produto
+                        <i class="bi bi-box me-2"></i><span id="produtoModalTitle">Novo Produto</span>
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <form id="produtoForm">
+                        <input type="hidden" name="id" id="produtoId">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="mb-3">
@@ -1115,19 +1247,19 @@ ob_end_flush();
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <label class="form-label">Preço de Venda *</label>
-                                    <input type="number" step="0.01" class="form-control form-control-custom" name="preco_venda" required>
+                                    <input type="number" step="0.01" min="0.01" class="form-control form-control-custom" name="preco_venda" required>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <label class="form-label">Comissão (%) *</label>
-                                    <input type="number" step="0.01" class="form-control form-control-custom" name="comissao_percentual" required>
+                                    <input type="number" step="0.01" min="0" max="100" class="form-control form-control-custom" name="comissao_percentual" required value="0">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <label class="form-label">Estoque Inicial</label>
-                                    <input type="number" class="form-control form-control-custom" name="estoque_atual" value="0">
+                                    <input type="number" min="0" class="form-control form-control-custom" name="estoque_atual" value="0">
                                 </div>
                             </div>
                         </div>
@@ -1153,12 +1285,13 @@ ob_end_flush();
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">
-                        <i class="bi bi-person-plus me-2"></i>Novo Cliente
+                        <i class="bi bi-person-plus me-2"></i><span id="clienteModalTitle">Novo Cliente</span>
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <form id="clienteForm">
+                        <input type="hidden" name="id" id="clienteId">
                         <div class="mb-3">
                             <label class="form-label">Tipo de Pessoa</label>
                             <div>
@@ -1315,12 +1448,13 @@ ob_end_flush();
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">
-                        <i class="bi bi-diagram-3 me-2"></i>Novo Cargo
+                        <i class="bi bi-diagram-3 me-2"></i><span id="cargoModalTitle">Novo Cargo</span>
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <form id="cargoForm">
+                        <input type="hidden" name="id" id="cargoId">
                         <div class="mb-3">
                             <label class="form-label">Nome do Cargo *</label>
                             <input type="text" class="form-control form-control-custom" name="nome" required>
@@ -1337,7 +1471,7 @@ ob_end_flush();
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Comissão Padrão (%)</label>
-                            <input type="number" step="0.01" class="form-control form-control-custom" name="comissao_padrao" value="0">
+                            <input type="number" step="0.01" min="0" max="100" class="form-control form-control-custom" name="comissao_padrao" value="0">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Descrição</label>
@@ -1361,14 +1495,15 @@ ob_end_flush();
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">
-                        <i class="bi bi-cart-plus me-2"></i>Nova Venda
+                        <i class="bi bi-cart-plus me-2"></i><span id="vendaModalTitle">Nova Venda</span>
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <form id="vendaForm">
+                        <input type="hidden" name="id" id="vendaId">
                         <div class="row mb-4">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="card">
                                     <div class="card-header">
                                         <h6>Dados do Cliente</h6>
@@ -1387,7 +1522,7 @@ ob_end_flush();
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="card">
                                     <div class="card-header">
                                         <h6>Dados da Venda</h6>
@@ -1406,6 +1541,33 @@ ob_end_flush();
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h6>Status</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label class="form-label">Status da Venda</label>
+                                            <select class="form-control form-control-custom" name="status_venda">
+                                                <option value="orcamento">Orçamento</option>
+                                                <option value="confirmada">Confirmada</option>
+                                                <option value="instalada">Instalada</option>
+                                                <option value="cancelada">Cancelada</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Status do Pagamento</label>
+                                            <select class="form-control form-control-custom" name="status_pagamento">
+                                                <option value="pendente">Pendente</option>
+                                                <option value="parcial">Parcial</option>
+                                                <option value="pago">Pago</option>
+                                                <option value="cancelado">Cancelado</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="card">
@@ -1416,28 +1578,34 @@ ob_end_flush();
                                 </button>
                             </div>
                             <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table" id="tabelaProdutosVenda">
-                                        <thead>
-                                            <tr>
-                                                <th>Produto</th>
-                                                <th>Qtd</th>
-                                                <th>Preço Unit.</th>
-                                                <th>Total</th>
-                                                <th>Ação</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <!-- Produtos adicionados dinamicamente -->
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th colspan="3" class="text-end">Total Geral:</th>
-                                                <th id="totalGeral">R$ 0,00</th>
-                                                <th></th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
+                                <div id="produtosVenda">
+                                    <!-- Produtos adicionados dinamicamente -->
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-4">
+                                        <div class="card bg-light">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between">
+                                                    <strong>Subtotal:</strong>
+                                                    <span id="vendaSubtotal">R$ 0,00</span>
+                                                </div>
+                                                <div class="d-flex justify-content-between">
+                                                    <span>Desconto:</span>
+                                                    <span id="vendaDesconto">R$ 0,00</span>
+                                                </div>
+                                                <div class="d-flex justify-content-between">
+                                                    <span>Acréscimo:</span>
+                                                    <span id="vendaAcrescimo">R$ 0,00</span>
+                                                </div>
+                                                <hr>
+                                                <div class="d-flex justify-content-between">
+                                                    <strong>Total:</strong>
+                                                    <strong id="vendaTotal">R$ 0,00</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1462,6 +1630,12 @@ ob_end_flush();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/dataTables.bootstrap5.min.js"></script>
 
     <script>
+        // Variáveis globais
+        let produtoVendaCounter = 0;
+        let currentEditId = null;
+        let vendedoresChart = null;
+        let vendasChart = null;
+
         // Configuração global AJAX
         $.ajaxSetup({
             headers: {
@@ -1477,14 +1651,16 @@ ob_end_flush();
 
         function initSistema() {
             // Navegação entre seções
-            $('.nav-link[data-section]').on('click', function(e) {
+            $('.nav-link[data-section], .dropdown-item[data-section]').on('click', function(e) {
                 e.preventDefault();
                 
                 const section = $(this).data('section');
                 
-                // Atualizar navegação
-                $('.nav-link').removeClass('active');
-                $(this).addClass('active');
+                // Atualizar navegação apenas para sidebar
+                if ($(this).hasClass('nav-link')) {
+                    $('.sidebar .nav-link').removeClass('active');
+                    $(this).addClass('active');
+                }
                 
                 // Mostrar seção
                 $('.main-content').addClass('d-none');
@@ -1504,26 +1680,59 @@ ob_end_flush();
                 $('#sidebar').toggleClass('show');
             });
             
-            // Alternância tipo pessoa
+            // Alternância tipo pessoa no cliente
             $('input[name="tipo_pessoa"]').on('change', function() {
-                if ($(this).val() === 'fisica') {
-                    $('#dadosPF').show();
-                    $('#dadosPJ').hide();
-                } else {
-                    $('#dadosPF').hide();
-                    $('#dadosPJ').show();
-                }
+                toggleTipoPessoa();
+            });
+            
+            // Limpar modais ao fechar
+            $('.modal').on('hidden.bs.modal', function() {
+                $(this).find('form')[0].reset();
+                $(this).find('input[type="hidden"]').val('');
+                $(this).find('.modal-title span').text($(this).find('.modal-title span').text().replace('Editar', 'Novo'));
+                $('#senhaObrigatoria').show();
+                $('#senhaHelp').hide();
+                $('#produtosVenda').empty();
+                produtoVendaCounter = 0;
+                currentEditId = null;
             });
             
             // Carregar dashboard inicial
             carregarDashboard();
             carregarCargosSelect();
+            carregarClientesSelect();
+            carregarVendedoresSelect();
+            carregarProdutosSelect();
+        }
+
+        function toggleTipoPessoa() {
+            const tipo = $('input[name="tipo_pessoa"]:checked').val();
+            
+            if (tipo === 'fisica') {
+                $('#dadosPF').show();
+                $('#dadosPJ').hide();
+                // Tornar campos PF obrigatórios
+                $('#dadosPF input[name="nome"], #dadosPF input[name="cpf"]').attr('required', true);
+                $('#dadosPJ input').attr('required', false);
+            } else {
+                $('#dadosPF').hide();
+                $('#dadosPJ').show();
+                // Tornar campos PJ obrigatórios
+                $('#dadosPJ input[name="razao_social"], #dadosPJ input[name="cnpj"]').attr('required', true);
+                $('#dadosPF input').attr('required', false);
+            }
         }
 
         function carregarSecao(section) {
             switch(section) {
                 case 'dashboard':
                     carregarDashboard();
+                    break;
+                case 'perfil':
+                    carregarPerfil();
+                    break;
+                case 'configuracoes':
+                    carregarConfiguracoes();
                     break;
                 case 'colaboradores':
                     carregarColaboradores();
@@ -1549,25 +1758,70 @@ ob_end_flush();
         function carregarDashboard() {
             $.get('api/endpoints.php?path=dashboard')
                 .done(function(response) {
-                    if (response.success) {
+                    if (response.success && response.data) {
                         const data = response.data;
-                        $('#totalVendas').text(data.vendas_mes || 0);
-                        $('#faturamento').text(formatMoeda(data.faturamento || 0));
-                        $('#colaboradores').text(data.colaboradores || 0);
-                        $('#estoqueBaixo').text(data.estoque_baixo || 0);
+                        $('#totalVendas').text(data.cards?.vendas || 0);
+                        $('#faturamento').text(formatMoeda(data.cards?.faturamento || 0));
+                        $('#colaboradores').text(data.cards?.colaboradores || 0);
+                        $('#estoqueBaixo').text(data.cards?.estoque_baixo || 0);
+                        
+                        // Atualizar gráficos com dados reais
+                        if (data.graficos?.vendas_por_mes) {
+                            criarGraficoVendas(data.graficos.vendas_por_mes);
+                        } else {
+                            criarGraficoVendas();
+                        }
+                        
+                        if (data.graficos?.top_vendedores) {
+                            criarGraficoVendedores(data.graficos.top_vendedores);
+                        } else {
+                            criarGraficoVendedores();
+                        }
+                    } else {
+                        // Dados padrão se não conseguir carregar
+                        criarGraficoVendas();
+                        criarGraficoVendedores();
                     }
-                    criarGraficoVendas();
-                    criarGraficoVendedores();
                 })
                 .fail(function() {
-                    // Dados fictícios se API falhar
-                    $('#totalVendas').text('12');
-                    $('#faturamento').text('R$ 15.480,00');
-                    $('#colaboradores').text('5');
-                    $('#estoqueBaixo').text('3');
-                    
+                    // Dados padrão se API falhar
                     criarGraficoVendas();
                     criarGraficoVendedores();
+                });
+        }
+
+        function carregarPerfil() {
+            $.get('api/endpoints.php?path=profile')
+                .done(function(response) {
+                    if (response.success) {
+                        const data = response.data;
+                        $('#perfilNome').val(data.nome);
+                        $('#perfilSobrenome').val(data.sobrenome);
+                        $('#perfilEmail').val(data.email);
+                        $('#perfilTelefone').val(data.telefone);
+                        $('#perfilCargo').text(data.cargo_nome);
+                        $('#perfilNivel').text(data.nivel_acesso);
+                        $('#perfilUltimoAcesso').text(data.ultimo_acesso ? formatDataBR(data.ultimo_acesso) : 'Nunca');
+                    }
+                })
+                .fail(function() {
+                    showAlert('error', 'Erro ao carregar perfil');
+                });
+        }
+
+        function carregarConfiguracoes() {
+            $.get('api/endpoints.php?path=settings')
+                .done(function(response) {
+                    if (response.success) {
+                        const data = response.data;
+                        $('#configEmpresaNome').val(data.empresa_nome || '');
+                        $('#configEmpresaCnpj').val(data.empresa_cnpj || '');
+                        $('#configComissaoAtiva').val(data.comissao_ativa || 'true');
+                        $('#configProximaVenda').val(data.proxima_venda || '1');
+                    }
+                })
+                .fail(function() {
+                    showAlert('error', 'Erro ao carregar configurações');
                 });
         }
 
@@ -1612,18 +1866,79 @@ ob_end_flush();
             $.get('api/endpoints.php?path=cargos')
                 .done(function(response) {
                     if (response.success) {
-                        const select = $('select[name="cargo_id"]');
-                        select.empty().append('<option value="">Selecione...</option>');
-                        
-                        response.data.forEach(function(cargo) {
-                            if (cargo.ativo) {
-                                select.append(`<option value="${cargo.id}">${cargo.nome}</option>`);
-                            }
+                        const selects = $('select[name="cargo_id"], select[name="vendedor_id"]');
+                        selects.each(function() {
+                            const $select = $(this);
+                            const isVendedor = $select.attr('name') === 'vendedor_id';
+                            
+                            $select.empty().append('<option value="">Selecione...</option>');
+                            
+                            response.data.forEach(function(cargo) {
+                                if (cargo.ativo) {
+                                    // Para vendedor, mostrar apenas vendedores/gerentes/admin
+                                    if (!isVendedor || ['vendedor', 'gerente', 'admin'].includes(cargo.nivel_acesso)) {
+                                        $select.append(`<option value="${cargo.id}">${cargo.nome}</option>`);
+                                    }
+                                }
+                            });
                         });
                     }
                 })
                 .fail(function() {
                     console.log('Erro ao carregar cargos');
+                });
+        }
+
+        function carregarClientesSelect() {
+            $.get('api/endpoints.php?path=clientes')
+                .done(function(response) {
+                    if (response.success) {
+                        const select = $('select[name="cliente_id"]');
+                        select.empty().append('<option value="">Selecione o cliente...</option>');
+                        
+                        response.data.forEach(function(cliente) {
+                            if (cliente.ativo) {
+                                const nome = cliente.tipo_pessoa === 'fisica' 
+                                    ? `${cliente.nome || ''} ${cliente.sobrenome || ''}`.trim()
+                                    : cliente.razao_social || '';
+                                select.append(`<option value="${cliente.id}">${nome}</option>`);
+                            }
+                        });
+                    }
+                })
+                .fail(function() {
+                    console.log('Erro ao carregar clientes');
+                });
+        }
+
+        function carregarVendedoresSelect() {
+            $.get('api/endpoints.php?path=colaboradores')
+                .done(function(response) {
+                    if (response.success) {
+                        const select = $('select[name="vendedor_id"]');
+                        select.empty().append('<option value="">Selecione o vendedor...</option>');
+                        
+                        response.data.forEach(function(colaborador) {
+                            if (colaborador.ativo && ['vendedor', 'gerente', 'admin'].includes(colaborador.nivel_acesso)) {
+                                select.append(`<option value="${colaborador.id}">${colaborador.nome} ${colaborador.sobrenome}</option>`);
+                            }
+                        });
+                    }
+                })
+                .fail(function() {
+                    console.log('Erro ao carregar vendedores');
+                });
+        }
+
+        function carregarProdutosSelect() {
+            $.get('api/endpoints.php?path=produtos')
+                .done(function(response) {
+                    if (response.success) {
+                        window.produtosList = response.data.filter(p => p.ativo);
+                    }
+                })
+                .fail(function() {
+                    console.log('Erro ao carregar produtos');
                 });
         }
 
@@ -1744,271 +2059,23 @@ ob_end_flush();
         }
 
         function carregarVendas() {
-            showAlert('info', 'Carregando vendas...');
-        }
-
-        function carregarFinanceiro() {
-            showAlert('info', 'Carregando dados financeiros...');
-        }
-
-        // Funções de salvamento
-        function salvarColaborador() {
-            const formData = serializeForm('#colaboradorForm');
-            
-            $.post('api/endpoints.php?path=colaboradores', formData)
+            $.get('api/endpoints.php?path=vendas')
                 .done(function(response) {
                     if (response.success) {
-                        $('#colaboradorModal').modal('hide');
-                        $('#colaboradorForm')[0].reset();
-                        showAlert('success', response.message);
-                        carregarColaboradores();
-                        carregarCargosSelect();
-                    } else {
-                        showAlert('error', response.message);
-                    }
-                })
-                .fail(function() {
-                    showAlert('error', 'Erro ao salvar colaborador');
-                });
-        }
-
-        function salvarProduto() {
-            const formData = serializeForm('#produtoForm');
-            
-            $.post('api/endpoints.php?path=produtos', formData)
-                .done(function(response) {
-                    if (response.success) {
-                        $('#produtoModal').modal('hide');
-                        $('#produtoForm')[0].reset();
-                        showAlert('success', response.message);
-                        carregarProdutos();
-                    } else {
-                        showAlert('error', response.message);
-                    }
-                })
-                .fail(function() {
-                    showAlert('error', 'Erro ao salvar produto');
-                });
-        }
-
-        function salvarCliente() {
-            const formData = serializeForm('#clienteForm');
-            
-            $.post('api/endpoints.php?path=clientes', formData)
-                .done(function(response) {
-                    if (response.success) {
-                        $('#clienteModal').modal('hide');
-                        $('#clienteForm')[0].reset();
-                        showAlert('success', response.message);
-                        carregarClientes();
-                    } else {
-                        showAlert('error', response.message);
-                    }
-                })
-                .fail(function() {
-                    showAlert('error', 'Erro ao salvar cliente');
-                });
-        }
-
-        function salvarCargo() {
-            const formData = serializeForm('#cargoForm');
-            
-            $.post('api/endpoints.php?path=cargos', formData)
-                .done(function(response) {
-                    if (response.success) {
-                        $('#cargoModal').modal('hide');
-                        $('#cargoForm')[0].reset();
-                        showAlert('success', response.message);
-                        carregarCargos();
-                        carregarCargosSelect();
-                    } else {
-                        showAlert('error', response.message);
-                    }
-                })
-                .fail(function() {
-                    showAlert('error', 'Erro ao salvar cargo');
-                });
-        }
-
-        function salvarVenda() {
-            showAlert('info', 'Função de venda em desenvolvimento');
-        }
-
-        // Funções auxiliares
-        function serializeForm(formId) {
-            const formData = {};
-            $(formId + ' input, ' + formId + ' select, ' + formId + ' textarea').each(function() {
-                const name = $(this).attr('name');
-                let value = $(this).val();
-                
-                if (name) {
-                    if ($(this).attr('type') === 'checkbox') {
-                        value = $(this).is(':checked');
-                    } else if ($(this).attr('type') === 'radio') {
-                        if ($(this).is(':checked')) {
-                            formData[name] = value;
-                        }
-                        return;
-                    }
-                    formData[name] = value;
-                }
-            });
-            return formData;
-        }
-
-        function showAlert(type, message) {
-            const alertClass = {
-                'success': 'alert-success',
-                'error': 'alert-danger',
-                'warning': 'alert-warning',
-                'info': 'alert-info'
-            }[type] || 'alert-info';
-            
-            const alertHtml = `
-                <div class="alert ${alertClass} alert-dismissible fade show position-fixed" 
-                     style="top: 20px; right: 20px; z-index: 9999; min-width: 300px;" role="alert">
-                    ${message}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            `;
-            
-            $('body').append(alertHtml);
-            
-            setTimeout(() => {
-                $('.alert').fadeOut(() => $('.alert').remove());
-            }, 5000);
-        }
-
-        function formatMoeda(valor) {
-            return new Intl.NumberFormat('pt-BR', {
-                style: 'currency',
-                currency: 'BRL'
-            }).format(valor || 0);
-        }
-
-        function formatCPF(cpf) {
-            if (!cpf) return '-';
-            return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-        }
-
-        function formatCNPJ(cnpj) {
-            if (!cnpj) return '-';
-            return cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
-        }
-
-        function initDataTable(selector) {
-            if ($.fn.DataTable.isDataTable(selector)) {
-                $(selector).DataTable().destroy();
-            }
-            
-            $(selector).DataTable({
-                language: {
-                    "sEmptyTable": "Nenhum registro encontrado",
-                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sInfoThousands": ".",
-                    "sLengthMenu": "_MENU_ resultados por página",
-                    "sLoadingRecords": "Carregando...",
-                    "sProcessing": "Processando...",
-                    "sZeroRecords": "Nenhum registro encontrado",
-                    "sSearch": "Pesquisar",
-                    "oPaginate": {
-                        "sNext": "Próximo",
-                        "sPrevious": "Anterior",
-                        "sFirst": "Primeiro",
-                        "sLast": "Último"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": Ordenar colunas de forma ascendente",
-                        "sSortDescending": ": Ordenar colunas de forma descendente"
-                    }
-                },
-                responsive: true,
-                pageLength: 25,
-                columnDefs: [
-                    { orderable: false, targets: -1 }
-                ]
-            });
-        }
-
-        function criarGraficoVendas() {
-            const ctx = document.getElementById('vendasChart');
-            if (ctx) {
-                new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-                        datasets: [{
-                            label: 'Vendas',
-                            data: [65, 78, 90, 81, 87, 105],
-                            borderColor: '#DC143C',
-                            backgroundColor: 'rgba(220, 20, 60, 0.1)',
-                            tension: 0.4,
-                            fill: true
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { legend: { display: false } },
-                        scales: { y: { beginAtZero: true } }
-                    }
-                });
-            }
-        }
-
-        function criarGraficoVendedores() {
-            const ctx = document.getElementById('vendedoresChart');
-            if (ctx) {
-                new Chart(ctx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['João Silva', 'Maria Santos', 'Pedro Costa'],
-                        datasets: [{
-                            data: [45, 30, 25],
-                            backgroundColor: ['#DC143C', '#B22222', '#8B0000']
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { legend: { position: 'bottom' } }
-                    }
-                });
-            }
-        }
-
-        // Funções placeholder para CRUD
-        function editarColaborador(id) { showAlert('info', 'Editar colaborador ID: ' + id); }
-        function excluirColaborador(id) { 
-            if (confirm('Tem certeza que deseja excluir este colaborador?')) {
-                showAlert('info', 'Excluir colaborador ID: ' + id); 
-            }
-        }
-        function editarProduto(id) { showAlert('info', 'Editar produto ID: ' + id); }
-        function excluirProduto(id) { 
-            if (confirm('Tem certeza que deseja excluir este produto?')) {
-                showAlert('info', 'Excluir produto ID: ' + id); 
-            }
-        }
-        function editarCliente(id) { showAlert('info', 'Editar cliente ID: ' + id); }
-        function excluirCliente(id) { 
-            if (confirm('Tem certeza que deseja excluir este cliente?')) {
-                showAlert('info', 'Excluir cliente ID: ' + id); 
-            }
-        }
-        function editarCargo(id) { showAlert('info', 'Editar cargo ID: ' + id); }
-        function excluirCargo(id) { 
-            if (confirm('Tem certeza que deseja excluir este cargo?')) {
-                showAlert('info', 'Excluir cargo ID: ' + id); 
-            }
-        }
-        
-        function adicionarProdutoVenda() {
-            showAlert('info', 'Função de adicionar produto em desenvolvimento');
-        }
-    </script>
-</body>
-</html>
+                        const tbody = $('#vendasTable tbody');
+                        tbody.empty();
+                        
+                        response.data.forEach(function(venda) {
+                            const statusVendaBadge = {
+                                'orcamento': 'bg-warning',
+                                'confirmada': 'bg-info',
+                                'instalada': 'bg-success',
+                                'cancelada': 'bg-danger'
+                            }[venda.status_venda] || 'bg-secondary';
+                            
+                            const statusPagamentoBadge = {
+                                'pendente': 'bg-warning',
+                                'parcial': 'bg-info',
+                                'pago': 'bg-success',
+                                'cancelado': 'bg-danger'
+                            }[venda.status_pagamento] || 

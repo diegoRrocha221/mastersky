@@ -1,5 +1,4 @@
 <?php
-
 class Produto {
     private $db;
     

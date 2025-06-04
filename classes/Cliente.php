@@ -1,4 +1,7 @@
 <?php
+// ====================================
+// classes/Cliente.php - CRUD Clientes
+// ====================================
 
 class Cliente {
     private $db;

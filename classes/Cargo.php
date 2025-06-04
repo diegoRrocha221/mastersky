@@ -146,4 +146,5 @@ class Cargo {
         return ['success' => true];
     }
 }
+
 ?>

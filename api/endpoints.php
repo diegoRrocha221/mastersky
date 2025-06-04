@@ -158,5 +158,6 @@ try {
 } catch (Exception $e) {
     echo json_encode(['success' => false, 'message' => 'Erro interno: ' . $e->getMessage()]);
 }
+
 ?>
 
